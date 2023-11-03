@@ -11,4 +11,4 @@ como se habia planteado en la propuesta inicial donde la id es la variable del m
 En el carrusel de prueba sandbox solo tiene una endpoint donde se obtiene los anuncios
 
 
-En el carrusel de produccion se dejara habilitado para que solo 
+En el carrusel de produccion se dejara habilitado para que solo se tenga que incluir la base del enpoint respetando los lineamientos planteado al inicio
