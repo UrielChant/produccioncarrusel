@@ -1,0 +1,70 @@
+//https://carruselmock.free.beeceptor.com/';
+//https://sigsig.free.beeceptor.com/ ya esta adaptada para la tarea
+//https://nexttodo.free.beeceptor.com/ esta es la segunda generada
+//https://todomoco.free.beeceptor.com/ esta es la tercera
+//https://yamecansedemockear.free.beeceptor.com/ segundo dia mockeando sin parar :'v
+//https://hailmock.free.beeceptor.com/ Usa el que necesitas para realizar preubas cualquiera es bueno
+
+
+[
+        {
+            "title": "Promo1",
+            "text": "Descripción",
+            "image": { "uri": "https://images.hola.com/imagenes/mascotas/20201005176621/perro-husky-raza-perro-lobo/0-874-110/husky-1-a.jpg" },
+            "link": "HelpScreen",
+            "start_date": "2023-10-25",
+            "end_date": "2023-12-25"
+        },
+        {
+            "title": "Promo2",
+            "text": "Descripción",
+            "image": { "uri": "https://images.hola.com/imagenes/mascotas/20201005176621/perro-husky-raza-perro-lobo/0-874-111/husky-2-a.jpg" },
+            "link": "HelpScreen",
+            "start_date": "2023-10-25",
+            "end_date": "2023-12-25"
+        }, {
+            "title": "Promo3",
+            "text": "Descripción",
+            "image": { "uri": "https://images.hola.com/imagenes/mascotas/20201005176621/perro-husky-raza-perro-lobo/0-874-108/husky-4-a.jpg" },
+            "link": "HelpScreen",
+            "start_date": "2023-10-25",
+            "end_date": "2023-12-25"
+        },
+        {
+            "title": "Promo4",
+            "text": "Descripción",
+            "image": { "uri": "https://images.hola.com/imagenes/mascotas/20201005176621/perro-husky-raza-perro-lobo/0-874-106/husky-7-a.jpg" },
+            "link": "HelpScreen",
+            "start_date": "2023-10-25",
+            "end_date": "2023-12-25"
+        }
+    ]
+
+
+
+
+
+{
+  "success": true,
+  "code": 200,
+  "message": "OK!",
+  "data": {
+    "ads": [
+      {
+        "id": 2,
+        "name": "prueba",
+        "alias": "Prueba",
+        "start_date": "2023-10-26T13:47:47.000Z",
+        "end_date": "2023-10-31T13:47:52.000Z",
+        "position": 0,
+        "call_to_action": null,
+        "image": "https://nueve09.mx/images/servicios.jpg",
+        "status": true,
+        "user_id": 1
+      }
+    ],
+    "total": 1,
+    "page_size": "1",
+    "page": "2"
+  }
+}
