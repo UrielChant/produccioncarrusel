@@ -44,7 +44,7 @@ async function iniciarSesion() {
 async function refrescar() {
     const token=localStorage.getItem('token');
 
-            console.log(data1.password);
+            //console.log(data1.password);
     try {
             const response = await fetch(url_endpoint+'ads', {//  /mobile   <--este faltante de liga me ayuda a entrar a un entorno de prueba
             method: 'GET',
