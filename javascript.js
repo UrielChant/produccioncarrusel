@@ -73,8 +73,8 @@ async function refrescar() {
                     row.insertCell(4).textContent = item.id;
                     row.insertCell(5).textContent = item.status;
                     row.insertCell(6).textContent = item.user_id;
-                    row.insertCell(7).textContent = item.start_date;
-                    row.insertCell(8).textContent = item.end_date;
+                    row.insertCell(7).textContent = item.start_date.substring(0,10);
+                    row.insertCell(8).textContent = item.end_date.substring(0,10);
                     // row.insertCell().textContent = item.image;
                     // console.log(typeof item.image);
                     var texturl=item.image;
@@ -135,8 +135,8 @@ async function veranuncio(itemId) {
         row2.insertCell(4).textContent = ads.id;
         row2.insertCell(5).textContent = ads.status;
         row2.insertCell(6).textContent = ads.user_id;
-        row2.insertCell(7).textContent = ads.start_date;
-        row2.insertCell(8).textContent = ads.end_date;
+        row2.insertCell(7).textContent = ads.start_date.substring(0,10);
+        row2.insertCell(8).textContent = ads.end_date.substring(0,10);
         var texturl=ads.image;
         identidad=ads.name;
         
