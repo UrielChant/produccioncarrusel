@@ -1,4 +1,4 @@
-url_endpoint='https://api-carousel-sandbox.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
+url_endpoint='https://api-carousel-prod.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
 var temporal="";
 var identidad='';
 //------------------Inicio de sesion url+login------------------------
