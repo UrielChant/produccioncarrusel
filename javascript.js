@@ -1,4 +1,4 @@
-url_endpoint='https://api-carousel-sandbox.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
+url_endpoint='https://api-carousel-prod.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
 var temporal="";
 var identidad='';
 //------------------Inicio de sesion url+login------------------------
@@ -23,7 +23,6 @@ async function iniciarSesion() {
             const primero  = await response.json();
             token=primero.data.token;
             user=primero.data.user.email;
-            console.log(token,user);
             localStorage.setItem('token',token);
             localStorage.setItem('user', user);
             document.getElementById('login').style.display = 'none';
