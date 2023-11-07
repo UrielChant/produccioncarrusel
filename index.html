@@ -51,8 +51,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="campo3" class="form-label">Link de imagen(imagen que mostrara):</label>
-                        <input type="file" class="form-control" id="campo3" name="campo3" accept="image/*">
-                        
+                        <input type="file" class="form-control" id="campo3" name="campo3" accept="image/*"> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="campo7" class="form-label">Posicion:</label>
+                        <input type="text" class="form-control" id="campo7" name="campo7">
                     </div>
                     <div class="mb-3">
                         <label for="campo4" class="form-label">link del anuncio(pagina web):</label>
@@ -60,11 +63,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="campo5" class="form-label">Fecha de inicio:</label>
-                        <input type="date" class="form-control" id="campo5" name="campo5">
+                        <input type="datetime-local" class="form-control" id="campo5" name="campo5">
                     </div>
                     <div class="mb-3">
                         <label for="campo6" class="form-label">Fecha de termino:</label>
-                        <input type="date" class="form-control" id="campo6" name="campo6">
+                        <input type="datetime-local" class="form-control" id="campo6" name="campo6">
                     </div>
                     <button type="button" class="btn btn-primary" id="enviar">Enviar</button>
                 </form>
@@ -85,28 +88,28 @@
                         <h2><span>Modificacion </span> para carrusel</h2><br>
                     </div>
                     <div class="mb-3">
-                        <label for="campo1" class="form-label">Nombre de anuncio(Titulo):</label>
+                        <label for="campo11" class="form-label">Nombre de anuncio(Titulo):</label>
                         <input type="text" class="form-control" id="campo11" name="campo11">
                     </div>
                     <div class="mb-3">
-                        <label for="campo2" class="form-label">Descripcion(texto):</label>
+                        <label for="campo22" class="form-label">Descripcion(texto):</label>
                         <input type="text" class="form-control" id="campo22" name="campo22">
                     </div>
                     <div class="mb-3">
-                        <label for="campo3" class="form-label">Link de imagen(imagen que mostrara):</label>
-                        <input type="file" class="form-control" id="campo33" name="campo33" accept="image/*">
+                        <label for="campo77" class="form-label">Posicion:</label>
+                        <input type="text" class="form-control" id="campo77" name="campo77">
                     </div>
                     <div class="mb-3">
-                        <label for="campo4" class="form-label">link del anuncio(pagina web):</label>
+                        <label for="campo44" class="form-label">link del anuncio(pagina web):</label>
                         <input type="text" class="form-control" id="campo44" name="campo44">
                     </div>
                     <div class="mb-3">
-                        <label for="campo5" class="form-label">Fecha de inicio:</label>
-                        <input type="date" class="form-control" id="campo55" name="campo55">
+                        <label for="campo55" class="form-label">Fecha de inicio:</label>
+                        <input type="datetime-local" class="form-control" id="campo55" name="campo55">
                     </div>
                     <div class="mb-3">
-                        <label for="campo6" class="form-label">Fecha de termino:</label>
-                        <input type="date" class="form-control" id="campo66" name="campo66">
+                        <label for="campo66" class="form-label">Fecha de termino:</label>
+                        <input type="datetime-local" class="form-control" id="campo66" name="campo66">
                     </div>
                     <button type="button" class="btn btn-primary" id="actualizar">modificar</button>
                 </form>
@@ -129,8 +132,12 @@
                                     <th>alias</th>
                                     <th>Posicion</th>
                                     <th>llamada a accion</th>
-                                    <th>fecha de inicio</th>
+                                    <th>ID</th>
+                                    <th>estado</th>
+                                    <th>U_id</th>
+                                    <th>fecha inicio</th>
                                     <th>fecha final</th>
+                                    <th>Link de imagen</th>
                                     <th>Borrar</th>
                                     <th>Visualizar</th>
                                 </tr>
@@ -158,11 +165,14 @@
                     <thead>
                         <tr>
                             <th>Titulo</th>
-                            <th>Descripcion</th>
-                            <th>Link de imagen</th>
-                            <th>Link de webpage</th>
-                            <th>Fecha de subida</th>
-                            <th>Fecha de bajada</th>
+                            <th>alias</th>
+                            <th>Posicion</th>
+                            <th>llamada a accion</th>
+                            <th>ID</th>
+                            <th>Estado</th>
+                            <th>U_ID</th>
+                            <th>fecha de inicio</th>
+                            <th>fecha final</th>
                             <th>Borrar</th>
                         </tr>
                     </thead>

@@ -1,4 +1,4 @@
-url_endpoint='https://api-carousel-prod.nueve09.io/v1/'; 
+url_endpoint='https://api-carousel-sandbox.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
 var temporal="";
 var identidad='';
 //------------------Inicio de sesion url+login------------------------
@@ -11,7 +11,7 @@ async function iniciarSesion() {
         password
     };
     try {
-        const response = await fetch(url_endpoint+'login', {
+        const response = await fetch(url_endpoint+'users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,7 +21,6 @@ async function iniciarSesion() {
 
         if (response.ok) {
             const primero  = await response.json();
-            console.log(primero);
             token=primero.data.token;
             user=primero.data.user.email;
             console.log(token,user);
@@ -41,11 +40,11 @@ async function iniciarSesion() {
 
 //------------------getpool de anuncios url+ads--------------------------
 async function refrescar() {
-    const token=localStorage.getItem('token');
-
-            console.log(data1.password);
+            //console.log(data1.password);
     try {
-            const response = await fetch(url_endpoint+'ads', {//  /mobile   <--este faltante de liga me ayuda a entrar a un entorno de prueba
+        const token=localStorage.getItem('token');
+            const response = await fetch(url_endpoint+'ads?page=1&page_size=18', {//  /mobile   <--este faltante de liga me ayuda a entrar a un entorno de prueba/la paginacion debe ser desde aqui para andar subiendo los archivos
+            //ads?page=1&page_size=1
             method: 'GET',
             headers: {
            'Content-Type': 'application/json',
@@ -55,10 +54,6 @@ async function refrescar() {
          });
         const data=await response.json();
         const ads=data.data.ads;
-        const total=data.data.total;
-        const page_size=data.data.page_size;
-        const page=data.data.page;
-        console.log("esperar");
         if (response.ok) {
             const tableBody = document.querySelector('#tablaDatos tbody');
             tableBody.innerHTML = '';
@@ -79,19 +74,19 @@ async function refrescar() {
                     // console.log(typeof item.image);
                     var texturl=item.image;
                 
-                const linkbutton = document.createElement("button");
-                linkbutton.textContent = texturl.substring(texturl.length-15);
-                linkbutton.addEventListener("click", () => src=texturl);//aqui se coloca el identificador  para realizar supresion
-                row.insertCell(9).appendChild(linkbutton);
+                // const linkbutton = document.createElement("button");
+                // linkbutton.textContent = texturl.substring(texturl.length-15);
+                // linkbutton.addEventListener("click", () => src=texturl);//aqui se coloca el identificador  para realizar supresion
+                    row.insertCell(9).textContent=texturl.substring(texturl.length-15);
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Eliminar";
-                deleteButton.addEventListener("click", () => borraranuncio(item.title));//aqui se coloca el identificador  para realizar supresion
+                deleteButton.addEventListener("click", () => borraranuncio(item.id));//aqui se coloca el identificador  para realizar supresion
                 row.insertCell(10).appendChild(deleteButton);
 
                 const viewButton = document.createElement("button");
                 viewButton.textContent = "Visualizar";
-                viewButton.addEventListener("click", () => veranuncio(conteo,page_size)); //aqui se coloca el identificador  para realizar lectura
+                viewButton.addEventListener("click", () => veranuncio(item.id)); //aqui se coloca el identificador  para realizar lectura
                 row.insertCell(11).appendChild(viewButton);
 
             });
@@ -107,12 +102,11 @@ async function refrescar() {
 
 //------------------------visualiza anuncio url+ads+paginacion-------------------------------------------------------
 async function veranuncio(itemId) {
-    const token=localStorage.getItem('token')
-    console.log("prueba de id:",itemId);
     document.getElementById('anuncios').style.display = 'none';
     document.getElementById('anuncioid').style.display = 'block';
     try {
-        const response = await fetch(url_endpoint+`${itemId}`, {//?page=2&page_size=1
+        const token=localStorage.getItem('token');
+        const response = await fetch(url_endpoint+`ads/${itemId}`, {//?page=2&page_size=1
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -120,12 +114,11 @@ async function veranuncio(itemId) {
             },
         });
     const data = await response.json();
-    const ads=data.data.ads[0];
-    temporal=[ads.name,ads.alias,ads.position,ads.call_to_action,ads.id,ads.status,ads.user_id,ads.start_date,data2.end_date];
+    const ads=data.data.ad;
+    temporal=[ads.name,ads.alias,ads.position,ads.call_to_action];
     if (response.ok) {
         const tableBody = document.querySelector('#tablaDatosads tbody');
         tableBody.innerHTML = ''; 
-        console.log(data);
 
         var row2 = tableBody.insertRow();
         row2.insertCell(0).textContent = ads.name;
@@ -137,22 +130,27 @@ async function veranuncio(itemId) {
         row2.insertCell(6).textContent = ads.user_id;
         row2.insertCell(7).textContent = ads.start_date.substring(0,10);
         row2.insertCell(8).textContent = ads.end_date.substring(0,10);
-        var texturl=ads.image;
-        identidad=ads.name;
+        identidad=ads.id;
         
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Eliminar";
         deleteButton.addEventListener("click", () => borraranuncio(ads.id));//aqui se coloca el identificador  para realizar supresion
         row2.insertCell(9).appendChild(deleteButton);
+        
         var row2 = tableBody.insertRow();
         var celdai=row2.insertCell();
         celdai.colSpan=10;
+        
         var image=new Image();
         image.src=ads.image;
+        image.style.maxWidth = "1080px"; 
+        image.style.maxHeight = "600px"; 
+        image.style.width = "100%";      
+        image.style.height = "auto";
         celdai.appendChild(image);
 
     } else {
-        console.error('Error al obtener los datos:', ads.error);
+        console.error('Error al obtener los datos:');
     }
 }
 catch (error) {
@@ -165,39 +163,41 @@ catch (error) {
 // -------------------------subida de anuncio url+ads--------------------------------------
 document.getElementById("enviar").addEventListener("click", async function() {
 
-    const campo1 = document.getElementById("campo1").value;
-    const campo2 = document.getElementById("campo2").value;
-    const campo3 = document.getElementById("campo3").value;
-    const campo4 = document.getElementById("campo4").value;
-    const campo5 = document.getElementById("campo5").value;
-    const campo6 = document.getElementById("campo6").value;
-
+    const name = document.getElementById("campo1").value;
+    const alias = document.getElementById("campo2").value;
+    const image = document.getElementById("campo3");
+    const call_to_action = document.getElementById("campo4").value;
+    const start_date = document.getElementById("campo5").value;
+    const end_date = document.getElementById("campo6").value;
+    const position = document.getElementById("campo7").value;
+    const archivo=image.files[0];
 
     const formData = new FormData();
-    formData.append("campo1", campo1);
-    formData.append("campo2", campo2);
-    formData.append("campo3", campo3);
-    formData.append("campo4", campo4);
-    formData.append("campo5", campo5);
-    formData.append("campo6", campo6);
-    const token=localStorage.getItem('token');
+    formData.append('name', name);
+    formData.append('alias', alias);
+    formData.append('start_date', start_date);
+    formData.append('end_date', end_date);
+    formData.append('position', position);
+    formData.append('call_to_action', call_to_action);
+    formData.append('image', archivo);
+    
+
 try{
+    const token=localStorage.getItem('token');
    const response= await fetch(url_endpoint+'ads', {
         method: "POST",
         headers:{
-            'Content-Type': 'application/json',
+            //'Content-Type': 'application/json',
             'Authorization':`Bearer ${token}`
         },
         body: formData
     })
 
     if (response.ok) {
-        const { estado } = await response.json();
-        console.log(estado);
         alert('Subida exitosa');
-        //aqui lo regresara hacia la pagina anterior dando un refrescamiento de datos
         document.getElementById('formulariocarrusel').style.display = 'none';
         document.getElementById('anuncios').style.display = 'block';
+        refrescar();
       
     } else {
         alert('sucedio un problema.');
@@ -241,29 +241,41 @@ catch (error) {
 //-----------------------Modificar anuncio url+ads+paginacion-----------------------------
 document.getElementById("actualizar").addEventListener("click", async function(){
     
-    const campo11 = document.getElementById("campo11").value;
-    const campo22 = document.getElementById("campo22").value;
-    const campo33 = document.getElementById("campo33").value;
-    const campo44 = document.getElementById("campo44").value;
-    const campo55 = document.getElementById("campo55").value;
-    const campo66 = document.getElementById("campo66").value;
+    const name = document.getElementById("campo11").value;
+    const alias = document.getElementById("campo22").value;
+    const call_to_action = document.getElementById("campo44").value;
+    const start_date = document.getElementById("campo55").value;
+    const end_date = document.getElementById("campo66").value;
+    const position = document.getElementById("campo77").value;
+    let boolva = true;
 
-    const formData = new FormData();
-    formData.append("campo11", campo11);
-    formData.append("campo22", campo22);
-    formData.append("campo33", campo33);
-    formData.append("campo44", campo44);
-    formData.append("campo55", campo55);
-    formData.append("campo66", campo66);
-    const token=localStorage.getItem('token')
+    // const formData = new FormData();
+    // formData.append('name', name);
+    // formData.append('alias', alias);
+    // formData.append('start_date', start_date);
+    // formData.append('end_date', end_date);
+    // formData.append('position', position);
+    // formData.append('call_to_action', call_to_action);
+
+
+    
     try {
+        const token=localStorage.getItem('token');
         const response = await fetch(url_endpoint+`ads/${identidad}`, {//aqui se debera de poner el id correspondiente
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization':`Bearer ${token}`
             },
-            body:formData
+            body:JSON.stringify ({
+                            name:name,
+                            alias:alias,
+                            start_date:start_date,
+                            end_date:end_date,
+                            position:position,
+                            call_to_action:call_to_action,
+                            status:boolva       
+            })
         });
 
         if (response.ok) {
@@ -300,12 +312,11 @@ document.getElementById("regresar2").addEventListener("click", function() {
 
 document.getElementById("modificar").addEventListener("click", function() {
     //checar si se quiere dejar o no para el autocompletado
-    campo11.value=temporal[0];
-    campo22.value=temporal[1];
-    //campo33.value=temporal[2];
-    campo44.value=temporal[3];
-    campo55.value=temporal[4];
-    campo66.value=temporal[5];
+     campo11.value=temporal[0];
+     campo22.value=temporal[1];
+     campo77.value=temporal[2];
+     campo44.value=temporal[3];
+
     document.getElementById('anuncioid').style.display = 'none';
     document.getElementById('formulariocarrusel2').style.display = 'block';
     })
