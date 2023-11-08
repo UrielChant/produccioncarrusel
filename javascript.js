@@ -239,6 +239,9 @@ document.getElementById("enviar").addEventListener("click", async function() {
     else if((end_date>start_date)&&((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
         alert('La posicion no debe de rebasar del numero 25')
     }
+    else if(!(((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!=='')))){
+        alert('Se encuentran todos los campos vacios')
+    }
     else if((position<25)&&(end_date>start_date)){
         alert('Hay un campo vacio no puedes enviar si hay un campo sin llenar')
     }
@@ -337,6 +340,9 @@ document.getElementById("actualizar").addEventListener("click", async function()
     }
     else if((end_date>start_date)&&((name!=='')&&(alias!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
         alert('La posicion no debe de rebasar del numero 25')
+    }
+    else if(!(((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!=='')))){
+        alert('Se encuentran todos los campos vacios')
     }
     else if((position<25)&&(end_date>start_date)){
         alert('Hay un campo vacio no puedes enviar si hay un campo sin llenar')
