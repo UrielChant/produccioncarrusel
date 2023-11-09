@@ -23,7 +23,6 @@ async function iniciarSesion() {
         if (response.ok) {
             const primero  = await response.json();
             token=primero.data.token;
-            console.log(token);
             user=primero.data.user.email;
             localStorage.setItem('token',token);
             localStorage.setItem('user', user);
@@ -60,13 +59,10 @@ async function refrescar() {
         if (response.ok) {
             const tableBody = document.querySelector('#tablaDatos tbody');
             tableBody.innerHTML = '';
-                console.log(fechaHoraActual);
                 ads.forEach(item => {
                     const row = tableBody.insertRow();
-                    var namecorto=item.name;
-                    row.insertCell(0).textContent = namecorto.substring(namecorto.length-15);
-                    var aliascorto=item.alias;
-                    row.insertCell(1).textContent = aliascorto.substring(aliascorto.length-15);
+                    row.insertCell(0).textContent = item.name.substring(0,15);
+                    row.insertCell(1).textContent = item.alias.substring(0,15);
                     row.insertCell(2).textContent = item.position;
                     row.insertCell(3).textContent = item.call_to_action.substring(0,15);
                     row.insertCell(4).textContent = item.id;
@@ -376,14 +372,16 @@ document.getElementById("modificar").addEventListener("click", function() {
      campo22.value=temporal[1];
      campo77.value=temporal[2];
      campo44.value=temporal[3];
-     campo55.value=temporal[4];
+     //campo55.value=temporal[4];
+     //var fechaini=temporal[4]
+     //document.getElementById('campo55').value=fecha;
 
     document.getElementById('anuncioid').style.display = 'none';
     document.getElementById('formulariocarrusel2').style.display = 'block';
     })
 document.getElementById("regresarf").addEventListener("click", function() {
     document.getElementById('formulariocarrusel2').style.display = 'none';
-    document.getElementById('anuncios').style.display = 'block';
+    document.getElementById('anuncioid').style.display = 'block';
     })
 //-----------------------------------------------------------------------------------------
 
