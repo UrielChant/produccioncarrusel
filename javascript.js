@@ -413,6 +413,7 @@ document.getElementById("regresar").addEventListener("click", function() {
 document.getElementById("regresar2").addEventListener("click", function() {
     document.getElementById('anuncioid').style.display = 'none';
     document.getElementById('anuncios').style.display = 'block';
+    refrescar();
     })
 
 document.getElementById("modificar").addEventListener("click", function() {
