@@ -356,7 +356,6 @@ document.getElementById("actualizar").addEventListener("click", async function()
 });
 //---------------------------------------------------------------------------------------------------
 
-//---------------------------modify state-----------------------------------------------------------
 //----------------------------Modificar true false stado-------------------------------------------------------------
 async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status){
     let boolva=!status;
@@ -383,12 +382,13 @@ async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status)
     });
 
     if (response.ok) {
-        //const {status2}= await response.json();
-       // console.log('Datos actualizados:', status2);
         alert("El estado de tu anuncio ha sido actualizado con exito");
-        // document.getElementById('formulariocarrusel2').style.display = 'none';
-        // document.getElementById('anuncios').style.display = 'block';
-        // refrescar();
+        if(document.getElementById('anuncios').style.display =='block' ){
+            refrescar();
+        }
+        else{
+            veranuncio(id);
+        }
     } else {
         console.error('Error al actualizar los datos:');
     }
@@ -398,12 +398,6 @@ async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status)
 }
 
 //-------------------------------------------------------------------------------------------------
-
-
-
-
-
-//---------------------------------------------------------------------------------------------------
 
 //-------------------------funciones para trasladarse------------------------------------------------
 document.getElementById("subir").addEventListener("click", function() {
