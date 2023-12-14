@@ -65,14 +65,6 @@
                         <label for="campo5" class="form-label">Fecha de inicio:</label>
                         <input type="datetime-local" class="form-control" id="campo5" name="campo5" min="" required>
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="img1" class="form-label">Imagen primaria que mostrara:</label>
-                        <input type="file" class="form-control" id="img1" name="img1" accept="image/*" required> 
-                    </div>
-                    <div class="mb-3">
-                        <label for="img2" class="form-label">Imagen secundaria mostrara:</label>
-                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" required> 
-                    </div> -->
                     <div class="mb-3">
                         <label for="campo6" class="form-label">Fecha de termino:</label>
                         <input type="datetime-local" class="form-control" id="campo6" name="campo6"  required>
@@ -81,7 +73,6 @@
                 </form>
             </div>
         </div>
-
 
         <div id="form_img" style="display: none;">
             <div class="container">
@@ -97,42 +88,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="img1" class="form-label">Imagen primaria que mostrara:</label>
-                        <input type="file" id="img1" name="img1" accept="image/*" > 
+                        <input type="file" class="form-control" id="img1" name="img1" accept="image/*" > 
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="img2" class="form-label">Imagen secundaria mostrara:</label>
-                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" required> 
-                    </div> -->
+                    <div class="mb-3">
+                        <label for="img2" class="form-label">Imagen secundaria que mostrara:</label>
+                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" > 
+                    </div>
                     <button type="button" class="btn btn-primary" id="enviarimg">Enviar</button>
                 </form>
             </div>
         </div>
-
-        <div id="form_img_mod" style="display: none;">
-            <div class="container">
-                <div class="cabecera">
-                    <img class="logon09" src="img/logo_nueve09.webp" alt="logo nueve09"/>
-                    <h2><span>Anuncios </span>en la plataforma</h2>
-                    <button type="button" class="btn btn-salida" id="regresarimg_mod"><img src="img/regresar.svg"> Regresar</button>
-                    </div>
-            
-                <form id="miFormulario">
-                    <div class="cabecera2">
-                        <h2><span>Subida </span> para carrusel</h2><br>
-                    </div>
-                    <div class="mb-3">
-                        <label for="img1" class="form-label">Imagen primaria que mostrara:</label>
-                        <input type="file" class="form-control" id="img1" name="img1" accept="image/*" required> 
-                    </div>
-                    <div class="mb-3">
-                        <label for="img2" class="form-label">Imagen secundaria mostrara:</label>
-                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" required> 
-                    </div>
-                    <button type="button" class="btn btn-primary" id="mod_img">Enviar</button>
-                </form>
-            </div>
-        </div>
-
 
         <div id="formulariocarrusel2" style="display: none;">
             <div class="container">
@@ -242,7 +207,6 @@
                         </tbody>
                         </table>
             <button type="button" class="btn btn-primary" id="subir_img">subir img</button>
-            <button type="button" class="btn btn-primary" id="modificar_img">modificar img</button>
             <button type="button" class="btn btn-primary" id="modificar">modificar inf</button>
         </table></div>
         </div>
