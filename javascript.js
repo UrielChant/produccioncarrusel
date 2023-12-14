@@ -1,11 +1,13 @@
-url_endpoint='https://api-carousel-prod.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
+url_endpoint='https://api-carousel-sandbox.nueve09.io/v1/';//'https://api-carousel-prod.nueve09.io/v1/'; 
 var temporal="";
 var identidad="";
 //------------------Inicio de sesion url+login------------------------
 async function iniciarSesion() {
-    const email= document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
+    // const email= document.getElementById('email').value;
+    // const password = document.getElementById('password').value;
+
+    const email="ubasurto@nueve09.mx";
+    const password ="2K4c5u4eve35tJ6l$";
 
     const data = {
         email,
@@ -23,6 +25,7 @@ async function iniciarSesion() {
         if (response.ok) {
             const primero  = await response.json();
             token=primero.data.token;
+            console.log(token);
             user=primero.data.user.email;
             localStorage.setItem('token',token);
             localStorage.setItem('user', user);
@@ -73,24 +76,19 @@ async function refrescar() {
                     row.insertCell(6).textContent = item.user_id;
                     row.insertCell(7).textContent = item.start_date.substring(0,10);
                     row.insertCell(8).textContent = item.end_date.substring(0,10);
-                    // row.insertCell().textContent = item.image;
-                    // console.log(typeof item.image);
-                    var texturl=item.image;
-                
-                // const linkbutton = document.createElement("button");
-                // linkbutton.textContent = texturl.substring(texturl.length-15);
-                // linkbutton.addEventListener("click", () => src=texturl);//aqui se coloca el identificador  para realizar supresion
-                    row.insertCell(9).textContent=texturl.substring(texturl.length-15);
+
+                    // var texturl=item.image;
+                    // row.insertCell(9).textContent=texturl.substring(texturl.length-15);
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Eliminar";
                 deleteButton.addEventListener("click", () =>confirmacion(item.id))
-                row.insertCell(10).appendChild(deleteButton);
+                row.insertCell(9).appendChild(deleteButton);
 
                 const viewButton = document.createElement("button");
                 viewButton.textContent = "Visualizar";
                 viewButton.addEventListener("click", () => veranuncio(item.id)); //aqui se coloca el identificador  para realizar lectura
-                row.insertCell(11).appendChild(viewButton);
+                row.insertCell(10).appendChild(viewButton);
 
             });
 
@@ -118,8 +116,8 @@ async function veranuncio(itemId) {
         });
     const data = await response.json();
     const ads=data.data.ad;
-    temporal=[ads.name,ads.alias,ads.position,ads.call_to_action,ads.start_date];
-    console.log(temporal);
+    temporal=[ads.name,ads.alias,ads.position,ads.call_to_action,ads.end_date];
+    //console.log(temporal);
     if (response.ok) {
         const tableBody = document.querySelector('#tablaDatosads tbody');
         tableBody.innerHTML = ''; 
@@ -144,23 +142,21 @@ async function veranuncio(itemId) {
         deleteButton.addEventListener("click", () => confirmacion(ads.id));//aqui se coloca el identificador  para realizar supresion
         row2.insertCell(9).appendChild(deleteButton);
         
-        var row2 = tableBody.insertRow();
-        var celdai=row2.insertCell();
-        celdai.colSpan=10;
-        
-        var image=new Image();
-        image.src=ads.image;
-        image.style.maxWidth = "1080px"; 
-        image.style.maxHeight = "600px"; 
-        image.style.width = "auto";      
-        image.style.height = "auto";
-        celdai.appendChild(image);
-        // var cadena=ads.alias;
-        // console.log(cadena);
         // var row2 = tableBody.insertRow();
-        // var celdaalias=row2.insertCell();
-        // celdaalias.colSpan=10;
-        // celdaalias.textContent(cadena);
+        // var celdai=row2.insertCell();
+        // celdai.colSpan=10;
+        
+        // var image=new Image();
+        // image.src=ads.image;
+        // image.style.maxWidth = "1080px"; 
+        // image.style.maxHeight = "600px"; 
+        // image.style.width = "auto";      
+        // image.style.height = "auto";
+        // celdai.appendChild(image);
+
+
+        
+        //veranuncioimg(ads.id);
 
     } else {
         console.error('Error al obtener los datos:');
@@ -171,20 +167,174 @@ catch (error) {
 }
     
 }
-//-----------------------------------------------------------------------------------
+//---------------------vista de image--------------------------------------------
+
+async function veranuncioimg(itemId) {
+    try {
+        const token=localStorage.getItem('token');
+        const response = await fetch(url_endpoint+`ads/${itemId}/image/FIRST`, {//?page=2&page_size=1 aqui posiblmente sea otro endpoint
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${token}`
+            },
+        });
+    const data = await response.json();
+    const ads=data.data.ad;
+    console.log(data,ads);
+    if (response.ok) {
+        const tableBody = document.querySelector('#tablaDatosads tbody');
+        //tableBody.innerHTML = ''; 
+        
+        
+        
+        var row2 = tableBody.insertRow();
+        var celdai=row2.insertCell();
+        celdai.colSpan=10;
+        
+        var image=new Image();
+        image.src=ads.image;//aqui se colocar la imagen que se tare dejson   
+        image.style.maxWidth = "1080px"; 
+        image.style.maxHeight = "600px"; 
+        image.style.width = "auto";      
+        image.style.height = "auto";
+        celdai.appendChild(image);
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Eliminar";
+        deleteButton.addEventListener("click", () => confirmacionim1(ads.id));//aqui se coloca el identificador  para realizar supresion
+        celdai.appendChild(deleteButton);
+    } else {
+        console.error('Error al obtener los datos:');
+    }
+}
+catch (error) {
+    console.error('Error de red:', error);
+}
+
+        try {
+            const token=localStorage.getItem('token');
+            const response = await fetch(url_endpoint+`ads/${itemId}/image/SECONDARY`, {//?page=2&page_size=1 aqui posiblmente sea otro endpoint
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+            });
+        const data = await response.json();
+        const ads=data.data.ad;
+        //console.log(temporal);
+        if (response.ok) {
+            const tableBody = document.querySelector('#tablaDatosads tbody');
+            //tableBody.innerHTML = ''; 
+
+        var row2 = tableBody.insertRow();
+        var celdai2=row2.insertCell();
+        celdai2.colSpan=10;
+
+        var image2=new Image();
+        image2.src=ads.image;//aqui se colocar la imagen que se tare dejson
+        image2.style.maxWidth = "1080px"; 
+        image2.style.maxHeight = "600px"; 
+        image2.style.width = "auto";      
+        image2.style.height = "auto";
+        celdai2.appendChild(image2);
+        const deleteButton2 = document.createElement("button");
+        deleteButton2.textContent = "Eliminar";
+        deleteButton2.addEventListener("click", () => confirmacionim2(ads.id));//aqui se coloca el identificador  para realizar supresion
+        celdai2.appendChild(deleteButton2);
+
+
+    } else {
+        console.error('Error al obtener los datos:');
+    }
+}
+catch (error) {
+    console.error('Error de red:', error);
+}
+};
+//------------------------------------------------------------------------------
+
+//--------------------------------subir imagen---------------------------------------------------
+document.getElementById("enviarimg").addEventListener("click", async function() {
+
+    const image = document.getElementById('img1');
+    //const image2 = document.getElementById("img2");
+    const archivo=image.files[0];
+
+   // const archivo2=image2.files[0];
+    //console.log(image.files);
+   
+   // console.log(archivo);
+    // const formData =('image', archivo); 
+    const formData = new FormData();
+    formData.append('image', image.files[0]);
+   // formData.append('image2', archivo2);
+          console.log(formData);///este si se pudo c: verrrrrrrrrrry happy
+    // if((image1!=='')&&(image2!=='')){
+        try{
+            const token=localStorage.getItem('token');
+           const response= await fetch(url_endpoint+`ads/${identidad}/image/FIRST`, {//ads/11/SECONDARY  O  FIRST
+                method: "POST",
+                headers:{
+                    //'Content-Type': 'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+                body: formData
+                //JSON.stringify({"image":archivo})
+            })
+        
+            if (response.ok) {
+                alert('Subida exitosa');
+                //image1.value='';
+                //image2.value='';
+                document.getElementById('formulariocarrusel').style.display = 'none';
+                document.getElementById('anuncios').style.display = 'block';
+                refrescar();
+              
+            } else {
+                alert('sucedio un problema.');
+            }
+        }
+            catch(error){
+                console.error("Error:", error);
+            };
+    //}
+    // else if(image1!==''){
+    //     alert('No procede no hay imagen secundaria por enviar')
+    // }
+    // else if(image2!==''){
+    //     alert('No procede no hay imagen primaria por enviar')
+    // }
+    
+    // else{
+    //     alert('No procede no hay imagenes para enviar')
+    // }
+});
 
 // -------------------------subida de anuncio url+ads--------------------------------------
 document.getElementById("enviar").addEventListener("click", async function() {
 
-    const name = document.getElementById("campo1").value;
-    const alias = document.getElementById("campo2").value;
-    const image = document.getElementById("campo3");
-    const call_to_action = document.getElementById("campo4").value;
-    const start_date = document.getElementById("campo5").value;
-    const end_date = document.getElementById("campo6").value;
-    const position = document.getElementById("campo7").value;
-    const archivo=image.files[0];
+    // const name = document.getElementById("campo1").value;
+    // const alias = document.getElementById("campo2").value;
+    // const call_to_action = document.getElementById("campo4").value;
+    // const start_date = document.getElementById("campo5").value;
+    // const end_date = document.getElementById("campo6").value;
+    // const position = document.getElementById("campo7").value;
 
+    const name = "prueba3";
+    const alias = "sepa";
+    const call_to_action = "nueve09.mx";
+    const start_date = "2023-12-14T16:16";
+    const end_date = "2023-12-24T16:16";
+    const position = 8;
+
+    //const image1 = document.getElementById("img1");
+   //const image2 = document.getElementById("img2");
+    // let status=true;
+    // const archivo=image1.files[0];
+    // const archivo2=image2.files[0];
+    //const archivo=image.files[0];
+    console.log(start_date);
     const formData = new FormData();
     formData.append('name', name);
     formData.append('alias', alias);
@@ -192,35 +342,48 @@ document.getElementById("enviar").addEventListener("click", async function() {
     formData.append('end_date', end_date);
     formData.append('position', position);
     formData.append('call_to_action', call_to_action);
-    formData.append('image', archivo);
-    // name.value='';
-    //     alias.value='';
-    //     call_to_action.value='';
-    //     start_date.value='';
-    //     end_date.value='';
-    //     position.value='';
-        
-    if((end_date>start_date)&&(position<25)&&((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
+    //formData.append('status', status);
+    //formData.append('image',image);
+    //formData.append('image2',archivo2);
+   //formData.append('image', archivo);
+   //console.log(formData);
+    console.log(name,alias,start_date,end_date,position,call_to_action);
+    console.log(typeof name,typeof alias,typeof start_date)
+   const data={name,
+   alias,
+   start_date,
+   end_date,
+   position,
+   call_to_action};
+   console.log(data);
+
+    // if((end_date>start_date)&&(position<25)&&((name!=='')&&(alias!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
         try{
             const token=localStorage.getItem('token');
            const response= await fetch(url_endpoint+'ads', {
                 method: "POST",
                 headers:{
-                    //'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                     'Authorization':`Bearer ${token}`
                 },
-                body: formData
-            })
+                body:JSON.stringify({
+                    "name": name,
+                    "alias": alias,
+                    "start_date": start_date,
+                    "end_date": end_date,
+                    "position": position,
+                    "call_to_action": call_to_action})                
+            }) 
         
             if (response.ok) {
                 alert('Subida exitosa');
-                image.value='';
-                document.getElementById("campo1").value='';
-                document.getElementById("campo2").value='';
-                document.getElementById("campo4").value='';
-                document.getElementById("campo5").value='';
-                document.getElementById("campo6").value='';
-                document.getElementById("campo7").value='';
+                // image.value='';
+                // document.getElementById("campo1").value='';
+                // document.getElementById("campo2").value='';
+                // document.getElementById("campo4").value='';
+                // document.getElementById("campo5").value='';
+                // document.getElementById("campo6").value='';
+                // document.getElementById("campo7").value='';
                 document.getElementById('formulariocarrusel').style.display = 'none';
                 document.getElementById('anuncios').style.display = 'block';
                 refrescar();
@@ -234,22 +397,22 @@ document.getElementById("enviar").addEventListener("click", async function() {
             };
         
 
-    }
-    else if((position<25)&&((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
-        alert('No procede los datos de la fecha no son correctos la fecha de termino debe superior a la fecha de inicio')
-    }
-    else if((end_date>start_date)&&((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
-        alert('La posicion no debe de rebasar del numero 25')
-    }
-    else if(!(((name!=='')&&(alias!=='')&&(image!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!=='')))){
-        alert('Se encuentran todos los campos vacios')
-    }
-    else if((position<25)&&(end_date>start_date)){
-        alert('Hay un campo vacio no puedes enviar si hay un campo sin llenar')
-    }
-    else{
-        alert('No procede los datos de la fecha no son correctos fecha de termino debe superior a la fecha de inicio, la posicion no debe de rebasar el numero 25 y hay un campo vacio, no puedes enviar si hay un campo sin llenar.')
-    }
+    // }
+    // else if((position<25)&&((name!=='')&&(alias!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
+    //     alert('No procede los datos de la fecha no son correctos la fecha de termino debe superior a la fecha de inicio')
+    // }
+    // else if((end_date>start_date)&&((name!=='')&&(alias!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!==''))){
+    //     alert('La posicion no debe de rebasar del numero 25')
+    // }
+    // else if(!(((name!=='')&&(alias!=='')&&(call_to_action!=='')&&(start_date!=='')&&(end_date!=='')&&(position!=='')))){
+    //     alert('Se encuentran todos los campos vacios')
+    // }
+    // else if((position<25)&&(end_date>start_date)){
+    //     alert('Hay un campo vacio no puedes enviar si hay un campo sin llenar')
+    // }
+    // else{
+    //     alert('No procede los datos de la fecha no son correctos fecha de termino debe superior a la fecha de inicio, la posicion no debe de rebasar el numero 25 y hay un campo vacio, no puedes enviar si hay un campo sin llenar.')
+    // }
 });
 //-----------------------------------------------------------------------
 
@@ -281,6 +444,59 @@ catch (error) {
 }
 }
 //-----------------------------------------------------------------------------
+
+//-----------------------eliminacion de imagenes----------------------------------------------
+async function borrarimagen1(itemId) {
+    const token=localStorage.getItem('token')
+    try {
+        const response = await fetch(url_endpoint+`ads/${itemId}/image/FIRST`, {//mapeo distinto para la imagen primaria?
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${token}`
+            },
+        });
+
+    if (response.ok) {
+        alert("tu imagen primaria");
+        refrescar();
+
+    } 
+    else {
+        console.error('Error al obtener los datos:', data.error);
+    }
+}
+catch (error) {
+    console.error('Error de red:', error);
+}
+}
+
+async function borrarimagen2(itemId) {
+    const token=localStorage.getItem('token')
+    try {
+        const response = await fetch(url_endpoint+`ads/${itemId}/image/SECONDARY`, {//mapeo distinto para la imagen secundaria?
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${token}`
+            },
+        });
+
+    if (response.ok) {
+        alert("tu imagen secundaria");
+        refrescar();
+
+    } 
+    else {
+        console.error('Error al obtener los datos:', data3.error);
+    }
+}
+catch (error) {
+    console.error('Error de red:', error);
+}
+}
+
+//---------------------------------------------------------------------------------------
 
 //-----------------------Modificar anuncio url+ads+paginacion-----------------------------
 document.getElementById("actualizar").addEventListener("click", async function(){
@@ -318,12 +534,14 @@ document.getElementById("actualizar").addEventListener("click", async function()
                                 position:position,
                                 call_to_action:call_to_action,
                                 status:boolva       
-                })
+                }),
+                
             });
     
             if (response.ok) {
                 //const {status2}= await response.json();
                // console.log('Datos actualizados:', status2);
+               
                 alert("tu anuncio ha sido actualizado con exito");
                 document.getElementById('formulariocarrusel2').style.display = 'none';
                 document.getElementById('anuncios').style.display = 'block';
@@ -356,9 +574,68 @@ document.getElementById("actualizar").addEventListener("click", async function()
 });
 //---------------------------------------------------------------------------------------------------
 
+//------------------modify img----------------------------------------------------
+
+document.getElementById("mod_img").addEventListener("click", async function(){
+    
+    const name = document.getElementById("img1");
+    const alias = document.getElementById("img2");
+    const archivo=name.files[0];
+    const archivo2=alias.files[0];
+
+    const formData = new FormData();
+    formData.append('image', archivo);
+    formData.append('image2', archivo2);
+        try {
+            const token=localStorage.getItem('token');
+            const response = await fetch(url_endpoint+`ads/${identidad}`, {//aqui se debera de poner el id correspondiente
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert("tus imagenes han sido actualizado con exito");
+                document.getElementById("img1").value='';
+                document.getElementById("img2").value='';
+                document.getElementById('form_img_mod').style.display = 'none';
+                document.getElementById('anuncioid').style.display = 'block';
+                
+                refrescar();
+            } else {
+                console.error('Error al actualizar los datos:');
+            }
+        } catch (error) {
+            console.error('Error de red:', error);
+        }
+        
+
+    }
+    );
+//-------------------------------------------------------------------
+
+
+
+
+
 //----------------------------Modificar true false stado-------------------------------------------------------------
 async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status){
     let boolva=!status;
+    console.log(id,named,aliasd,start,end,positiond,call,status);
+    const data={
+        name:named,
+                        alias:aliasd,
+                        start_date:start,
+                        end_date:end,
+                        position:positiond,
+                        call_to_action:call,
+                        status:boolva
+    }
+    console.log(typeof named,typeof id,typeof aliasd,typeof start)
+
     try {
     const token=localStorage.getItem('token');
     
@@ -370,17 +647,8 @@ async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status)
             'Content-Type': 'application/json',
             'Authorization':`Bearer ${token}`
         },
-        body:JSON.stringify ({
-                        name:named,
-                        alias:aliasd,
-                        start_date:start,
-                        end_date:end,
-                        position:positiond,
-                        call_to_action:call,
-                        status:boolva       
-        })
+        body:JSON.stringify (data)
     });
-
     if (response.ok) {
         alert("El estado de tu anuncio ha sido actualizado con exito");
         if(document.getElementById('anuncios').style.display =='block' ){
@@ -404,25 +672,41 @@ document.getElementById("subir").addEventListener("click", function() {
     document.getElementById('anuncios').style.display = 'none';
     document.getElementById('formulariocarrusel').style.display = 'block';
     })
-    
+document.getElementById("subir_img").addEventListener("click", function() {
+    document.getElementById('anuncioid').style.display = 'none';
+    document.getElementById('form_img').style.display = 'block';
+    })
 document.getElementById("regresar").addEventListener("click", function() {
     document.getElementById('formulariocarrusel').style.display = 'none';
     document.getElementById('anuncios').style.display = 'block';
     })
-    
 document.getElementById("regresar2").addEventListener("click", function() {
     document.getElementById('anuncioid').style.display = 'none';
     document.getElementById('anuncios').style.display = 'block';
     refrescar();
     })
-
+document.getElementById("regresarimg").addEventListener("click", function() {
+    document.getElementById('form_img').style.display = 'none';
+    document.getElementById('anuncioid').style.display = 'block';
+    refrescar();
+    })
+document.getElementById("modificar_img").addEventListener("click", function() {
+    document.getElementById('anuncioid').style.display = 'none';
+    document.getElementById('form_img_mod').style.display = 'block';
+    })
+document.getElementById("regresarimg_mod").addEventListener("click", function() {
+    document.getElementById('form_img_mod').style.display = 'none';
+    document.getElementById('anuncioid').style.display = 'block';
+    refrescar();
+    })
 document.getElementById("modificar").addEventListener("click", function() {
     //checar si se quiere dejar o no para el autocompletado
+    console.log(temporal[0],temporal[1],temporal[2],temporal[3]);
      campo11.value=temporal[0];
      campo22.value=temporal[1];
      campo77.value=temporal[2];
      campo44.value=temporal[3];
-     //campo55.value=temporal[4];
+     //campo66.value=temporal[4];
      //var fechaini=temporal[4]
      //document.getElementById('campo55').value=fecha;
 
@@ -524,6 +808,34 @@ var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?
                 alert('Acción cancelada');
             }
         };
+
+function confirmacionim1(identificacion){
+var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?');
+            
+            // Verificar si se confirmó la acción
+            if (confirmacion) {
+                borrarimagen1(identificacion);
+                alert('Acción realizada');
+                            // Código para la acción
+            } else {
+                            // Si el usuario cancela, no se realizará ninguna acción
+            alert('Acción cancelada');
+            }
+        };
+
+function confirmacionim2(identificacion){
+var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?');
+                        
+                        // Verificar si se confirmó la acción
+            if (confirmacion) {
+                borrarimagen2(identificacion);
+                alert('Acción realizada');
+                                        // Código para la acción
+            } else {
+                                        // Si el usuario cancela, no se realizará ninguna acción
+            alert('Acción cancelada');
+            }
+            };
 const fechaHoraActual = new Date().toISOString().slice(0, 16);
         
     document.getElementById("campo5").min = fechaHoraActual;

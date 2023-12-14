@@ -26,6 +26,10 @@
                 <label for="password">Contraseña:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <div class="form-group">
+                <label>¿Olvidaste  tu contraseña?</label>
+                <p><a href="recuperar.html">Recuperar contraseña</a></p>
+            </div>
             <button type="button" class="btn btn-primary" onclick="iniciarSesion()" >Iniciar</button>
         </div>
 
@@ -43,15 +47,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="campo1" class="form-label">Nombre de anuncio(Título):</label>
-                        <input type="text" class="form-control" id="campo1" name="campo1" maxlength="20" required>
+                        <input type="text" class="form-control" id="campo1" name="campo1" maxlength="25" required>
                     </div>
                     <div class="mb-3">
                         <label for="campo2" class="form-label">Alias:</label>
-                        <input type="text" class="form-control" id="campo2" name="campo2" maxlength="20" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="campo3" class="form-label">Link de imagen(imagen que mostrara):</label>
-                        <input type="file" class="form-control" id="campo3" name="campo3" accept="image/*" required> 
+                        <input type="text" class="form-control" id="campo2" name="campo2" maxlength="25" required>
                     </div>
                     <div class="mb-3">
                         <label for="campo7" class="form-label">Posicion(numerica):</label>
@@ -59,12 +59,20 @@
                     </div>
                     <div class="mb-3">
                         <label for="campo4" class="form-label">link del anuncio(pagina web o descripción):</label>
-                        <input type="text" class="form-control" id="campo4" name="campo4" maxlength="25">
+                        <input type="text" class="form-control" id="campo4" name="campo4" maxlength="100">
                     </div>
                     <div class="mb-3">
                         <label for="campo5" class="form-label">Fecha de inicio:</label>
                         <input type="datetime-local" class="form-control" id="campo5" name="campo5" min="" required>
                     </div>
+                    <!-- <div class="mb-3">
+                        <label for="img1" class="form-label">Imagen primaria que mostrara:</label>
+                        <input type="file" class="form-control" id="img1" name="img1" accept="image/*" required> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="img2" class="form-label">Imagen secundaria mostrara:</label>
+                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" required> 
+                    </div> -->
                     <div class="mb-3">
                         <label for="campo6" class="form-label">Fecha de termino:</label>
                         <input type="datetime-local" class="form-control" id="campo6" name="campo6"  required>
@@ -73,6 +81,58 @@
                 </form>
             </div>
         </div>
+
+
+        <div id="form_img" style="display: none;">
+            <div class="container">
+                <div class="cabecera">
+                    <img class="logon09" src="img/logo_nueve09.webp" alt="logo nueve09"/>
+                    <h2><span>Anuncios </span>en la plataforma</h2>
+                    <button type="button" class="btn btn-salida" id="regresarimg"><img src="img/regresar.svg"> Regresar</button>
+                    </div>
+            
+                <form id="miFormulario">
+                    <div class="cabecera2">
+                        <h2><span>Subida </span> para carrusel</h2><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="img1" class="form-label">Imagen primaria que mostrara:</label>
+                        <input type="file" id="img1" name="img1" accept="image/*" > 
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="img2" class="form-label">Imagen secundaria mostrara:</label>
+                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" required> 
+                    </div> -->
+                    <button type="button" class="btn btn-primary" id="enviarimg">Enviar</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="form_img_mod" style="display: none;">
+            <div class="container">
+                <div class="cabecera">
+                    <img class="logon09" src="img/logo_nueve09.webp" alt="logo nueve09"/>
+                    <h2><span>Anuncios </span>en la plataforma</h2>
+                    <button type="button" class="btn btn-salida" id="regresarimg_mod"><img src="img/regresar.svg"> Regresar</button>
+                    </div>
+            
+                <form id="miFormulario">
+                    <div class="cabecera2">
+                        <h2><span>Subida </span> para carrusel</h2><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="img1" class="form-label">Imagen primaria que mostrara:</label>
+                        <input type="file" class="form-control" id="img1" name="img1" accept="image/*" required> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="img2" class="form-label">Imagen secundaria mostrara:</label>
+                        <input type="file" class="form-control" id="img2" name="img2" accept="image/*" required> 
+                    </div>
+                    <button type="button" class="btn btn-primary" id="mod_img">Enviar</button>
+                </form>
+            </div>
+        </div>
+
 
         <div id="formulariocarrusel2" style="display: none;">
             <div class="container">
@@ -137,7 +197,6 @@
                                     <th>U_id</th>
                                     <th>fecha inicio</th>
                                     <th>fecha final</th>
-                                    <th>Link de imagen</th>
                                     <th>Borrar</th>
                                     <th>Visualizar</th>
                                 </tr>
@@ -182,10 +241,27 @@
                         </tbody>
                         </tbody>
                         </table>
-            <button type="button" class="btn btn-primary" id="modificar">modificar</button>
+            <button type="button" class="btn btn-primary" id="subir_img">subir img</button>
+            <button type="button" class="btn btn-primary" id="modificar_img">modificar img</button>
+            <button type="button" class="btn btn-primary" id="modificar">modificar inf</button>
         </table></div>
         </div>
     <script src="javascript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+<!-- 
+
+                    <div class="mb-3">
+                        <label for="campo3" class="form-label">Link de imagen(imagen que mostrara):</label>
+                        <input type="file" class="form-control" id="campo3" name="campo3" accept="image/*" required> 
+                    </div>
+
+
+ -->
