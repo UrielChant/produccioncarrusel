@@ -3,6 +3,8 @@ var temporal="";
 var identidad="";
 //------------------Inicio de sesion url+login------------------------
 async function iniciarSesion() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     const data = {
         email,
@@ -117,7 +119,12 @@ async function veranuncio(itemId) {
         row2.insertCell(0).textContent = ads.name;
         row2.insertCell(1).textContent = ads.alias.substring(0,10);
         row2.insertCell(2).textContent = ads.position;
-        row2.insertCell(3).textContent = ads.call_to_action;
+        var enlace = document.createElement("a");
+        enlace.textContent = ads.call_to_action.substring(0,20);
+        enlace.href=ads.call_to_action;
+        enlace.target = '_blank';
+        celdenl=row2.insertCell(3);
+        celdenl.appendChild(enlace);
         row2.insertCell(4).textContent = ads.id;
         const state=document.createElement("button");
         state.textContent=ads.status;
