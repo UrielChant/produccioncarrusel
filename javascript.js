@@ -452,7 +452,7 @@ async function borrarimagen1(itemId) {
         });
 
     if (response.ok) {
-        alert("tu imagen primaria ha sido eliminada");
+        alert("tu imagen primaria ha sido ELIMINADA");
         veranuncio(itemId)
 
     } 
@@ -477,12 +477,12 @@ async function borrarimagen2(itemId) {
         });
 
     if (response.ok) {
-        alert("tu imagen secundaria ha sido eliminada");
+        alert("tu imagen secundaria ha sido ELIMINADA");
         veranuncio(itemId)
 
     } 
     else {
-        console.error('Error al obtener los datos:', data3.error);
+        console.error('Error al obtener los datos:', data.error);
     }
 }
 catch (error) {
@@ -716,31 +716,31 @@ var confirmation = confirm('¿Estás seguro de que deseas realizar esta acción?
 
             if (confirmacion) {
                 borraranuncio(identificacion);
-                alert('Acción realizada');
+                alert('Anuncio ELIMINADO');
             } else {
-                alert('Acción cancelada');
+                alert('Acción CANCELADA');
             }
         }
 
         else if((im1!==null)&&confirmation&&(im2==null)){
-            alert('Primero debes de borrar las imagenes queda la imagen primaria ¿deseas elimiarla?')
-            var decision =confirm("¿Quieres eliminar la imagen primaria?");
+            alert('Primero debes de borrar las imagenes queda la imagen primaria')
+            var decision =confirm("¿Quieres ELIMINAR la imagen primaria?");
             if(decision){
                 confirmacionim1(identificacion);
                 //confirmacion(identificacion,im1,im2);
-                alert('accion realizada ahora puede borrar el anuncio');
+                //alert('accion realizada ahora puede borrar el anuncio');
             }
             else{
-                alert('accion no realizada')
+                alert('accion no REALIZADA')
             }
         }
         else if((im2!==null)&&confirmation&&(im1==null)){
-            alert('Primero debes de borrar las imagenes queda la imagen seccundaria ¿deseas elimiarla?')
-            var decision =confirm("¿Quieres eliminar la imagen secundaria?");
+            alert('Primero debes de borrar la imagen secundaria')
+            var decision =confirm("¿Quieres ELIMINAR la imagen secundaria?");
             if(decision){
                 confirmacionim2(identificacion);
                 //confirmacion(identificacion,im1,im2);
-                alert('accion realizada ahora puede borrar el anuncio');
+                //alert('accion realizada ahora puede borrar el anuncio');
             }
             else{
                 alert('accion no realizada')
@@ -748,15 +748,15 @@ var confirmation = confirm('¿Estás seguro de que deseas realizar esta acción?
         }
         else{
             alert('Primero debes de borrar las imagenes que se encuentran en el anuncio si deseas elimiarlo')
-            var decision =confirm("¿Quieres eliminarlas?");
+            var decision =confirm("¿Quieres ELIMINAR LAS IMAGENES?");
             if(decision){
                 confirmacionim1(identificacion);
                 confirmacionim2(identificacion);
                 //confirmacion(identificacion,im1,im2);
-                alert('accion realizada ahora puede borrar el anuncio');
+                //alert('accion realizada ahora puede borrar el anuncio');
             }
             else{
-                alert('accion no realizada')
+                alert('accion NO REALIZADA')
             }
         }
     };
@@ -764,21 +764,21 @@ var confirmation = confirm('¿Estás seguro de que deseas realizar esta acción?
 
 
 function confirmacionim1(identificacion){
-var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?');
+var confirmacion = confirm('¿ESTÁS SEGURO de que deseas ELIMINAR LA IMAGEN PRIMARIA?');
             
             if (confirmacion) {
                 borrarimagen1(identificacion);
-                alert('Acción realizada');
+                alert('SE HA ELIMINADO');
             } else {
             alert('Acción cancelada');
             }
         };
 
 function confirmacionim2(identificacion){
-var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?');
+var confirmacion = confirm('¿ESTÁS SEGURO de que deseas ELIMINAR LA IMAGEN SECUNDARIA?');
             if (confirmacion) {
                 borrarimagen2(identificacion);
-                alert('Acción realizada');
+                alert('SE HA ELIMINADO');
             } else {
             alert('Acción cancelada');
             }
