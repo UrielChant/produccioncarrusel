@@ -76,12 +76,12 @@ async function refrescar() {
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Eliminar";
-                deleteButton.addEventListener("click", () =>confirmacion(item.id))
+                deleteButton.addEventListener("click", () =>confirmacion(item.id,item.image,item.image2))
                 row.insertCell(9).appendChild(deleteButton);
 
                 const viewButton = document.createElement("button");
                 viewButton.textContent = "Visualizar";
-                viewButton.addEventListener("click", () => veranuncio(item.id)); //aqui se coloca el identificador  para realizar lectura
+                viewButton.addEventListener("click", () => veranuncio(item.id,item.image,item.image2)); //aqui se coloca el identificador  para realizar lectura
                 row.insertCell(10).appendChild(viewButton);
 
             });
@@ -96,7 +96,7 @@ async function refrescar() {
 //----------------------------------------------------------------------
 
 //------------------------visualiza anuncio url+ads+paginacion-------------------------------------------------------
-async function veranuncio(itemId) {
+async function veranuncio(itemId,imagen1,imagen2) {
     document.getElementById('anuncios').style.display = 'none';
     document.getElementById('anuncioid').style.display = 'block';
     try {
@@ -110,7 +110,7 @@ async function veranuncio(itemId) {
         });
     const data = await response.json();
     const ads=data.data.ad;
-    temporal=[ads.name,ads.alias,ads.position,ads.call_to_action,ads.end_date];
+    temporal=[ads.name,ads.alias,ads.position,ads.call_to_action,ads.start_date,ads.end_date];
     if (response.ok) {
         const tableBody = document.querySelector('#tablaDatosads tbody');
         tableBody.innerHTML = ''; 
@@ -137,7 +137,7 @@ async function veranuncio(itemId) {
         
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Eliminar";
-        deleteButton.addEventListener("click", () => confirmacion(ads.id));//aqui se coloca el identificador  para realizar supresion
+        deleteButton.addEventListener("click", () => confirmacion(ads.id,imagen1,imagen2));//aqui se coloca el identificador  para realizar supresion
         row2.insertCell(9).appendChild(deleteButton);
         
         var row2 = tableBody.insertRow();
@@ -288,8 +288,6 @@ document.getElementById("enviarimg").addEventListener("click", async function() 
     const image2 = document.getElementById('img2');
     const typimg="FIRST";
     const typimg2="SECONDARY";
-
-    console.log(typeof image.files[0],typeof image2.files[0],typeof image.files,typeof image2.files);
         if (((typeof image.files[0])=='object')&&((typeof image2.files[0])=='object')){
             var formData = new FormData();
             formData.append('image', image.files[0]);
@@ -454,7 +452,7 @@ async function borrarimagen1(itemId) {
         });
 
     if (response.ok) {
-        alert("tu imagen primaria");
+        alert("tu imagen primaria ha sido eliminada");
         veranuncio(itemId)
 
     } 
@@ -479,7 +477,7 @@ async function borrarimagen2(itemId) {
         });
 
     if (response.ok) {
-        alert("tu imagen secundaria");
+        alert("tu imagen secundaria ha sido eliminada");
         veranuncio(itemId)
 
     } 
@@ -559,6 +557,7 @@ document.getElementById("actualizar").addEventListener("click", async function()
 });
 //----------------------------Modificar true false stado-------------------------------------------------------------
 async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status){
+    boolva=!status;
     try {
     const token=localStorage.getItem('token');
     const response = await fetch(url_endpoint+`ads/${id}`, {//aqui se debera de poner el id correspondiente
@@ -567,7 +566,15 @@ async function cambio_de_estado(id,named,aliasd,start,end,positiond,call,status)
             'Content-Type': 'application/json',
             'Authorization':`Bearer ${token}`
         },
-        body:JSON.stringify (data)
+        body:JSON.stringify ({
+                                name:named,
+                                alias:aliasd,
+                                start_date:start,
+                                end_date:end,
+                                position:positiond,
+                                call_to_action:call,
+                                status:boolva  
+        })
     });
     if (response.ok) {
         alert("El estado de tu anuncio ha sido actualizado con exito");
@@ -614,6 +621,8 @@ document.getElementById("modificar").addEventListener("click", function() {
      campo22.value=temporal[1];
      campo77.value=temporal[2];
      campo44.value=temporal[3];
+     campo55.value=temporal[4].substring(0,16);
+     campo66.value=temporal[5].substring(0,16);
     document.getElementById('anuncioid').style.display = 'none';
     document.getElementById('formulariocarrusel2').style.display = 'block';
     })
@@ -699,15 +708,60 @@ document.getElementById('login').addEventListener('button', function(e) {
     return emailRegex.test(email);
   }
 //---------------------------------------------------------------------------------------
-function confirmacion(identificacion){
-var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?');
+function confirmacion(identificacion,im1,im2){
+var confirmation = confirm('¿Estás seguro de que deseas realizar esta acción?');
+
+    if ((im1==null)&&(im2==null)&&confirmation){
+
+
             if (confirmacion) {
                 borraranuncio(identificacion);
                 alert('Acción realizada');
             } else {
                 alert('Acción cancelada');
             }
-        };
+        }
+
+        else if((im1!==null)&&confirmation&&(im2==null)){
+            alert('Primero debes de borrar las imagenes queda la imagen primaria ¿deseas elimiarla?')
+            var decision =confirm("¿Quieres eliminar la imagen primaria?");
+            if(decision){
+                confirmacionim1(identificacion);
+                //confirmacion(identificacion,im1,im2);
+                alert('accion realizada ahora puede borrar el anuncio');
+            }
+            else{
+                alert('accion no realizada')
+            }
+        }
+        else if((im2!==null)&&confirmation&&(im1==null)){
+            alert('Primero debes de borrar las imagenes queda la imagen seccundaria ¿deseas elimiarla?')
+            var decision =confirm("¿Quieres eliminar la imagen secundaria?");
+            if(decision){
+                confirmacionim2(identificacion);
+                //confirmacion(identificacion,im1,im2);
+                alert('accion realizada ahora puede borrar el anuncio');
+            }
+            else{
+                alert('accion no realizada')
+            }
+        }
+        else{
+            alert('Primero debes de borrar las imagenes que se encuentran en el anuncio si deseas elimiarlo')
+            var decision =confirm("¿Quieres eliminarlas?");
+            if(decision){
+                confirmacionim1(identificacion);
+                confirmacionim2(identificacion);
+                //confirmacion(identificacion,im1,im2);
+                alert('accion realizada ahora puede borrar el anuncio');
+            }
+            else{
+                alert('accion no realizada')
+            }
+        }
+    };
+
+
 
 function confirmacionim1(identificacion){
 var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?');
@@ -731,8 +785,8 @@ var confirmacion = confirm('¿Estás seguro de que deseas realizar esta acción?
             };
 const fechaHoraActual = new Date().toISOString().slice(0, 16);
         
-    document.getElementById("campo5").min = fechaHoraActual;
-    document.getElementById("campo55").min = fechaHoraActual;
+    //document.getElementById("campo5").min = fechaHoraActual;
+    //document.getElementById("campo55").min = fechaHoraActual;
 
     const startDate = document.getElementById("campo5");
     const endDate = document.getElementById("campo6");
